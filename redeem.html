@@ -1,38 +1,44 @@
+<!-- redeem.html - Redeem Page with Popup -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redeem Gift Code | RedeemIt.co</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redeem Code | RedeemIt.co</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background: linear-gradient(to right, #1e3c72, #2a5298);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
       padding: 20px;
     }
-
     .container {
-      background: rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.05);
       padding: 40px;
       border-radius: 16px;
       width: 100%;
-      max-width: 450px;
+      max-width: 500px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
-
     .logo {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: bold;
       color: #00e3ff;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-
     input {
       padding: 12px;
       width: 90%;
@@ -43,7 +49,6 @@
       background: rgba(255,255,255,0.1);
       color: white;
     }
-
     button {
       padding: 12px 24px;
       font-size: 16px;
@@ -54,22 +59,42 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    .popup {
+    .popup-background {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #1b263b;
-      color: white;
-      padding: 30px;
-      border-radius: 16px;
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
       display: none;
-      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+    }
+    .popup {
+      background: #1b263b;
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .popup h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .popup a {
+      display: block;
+      margin-top: 15px;
+      color: #00e3ff;
+      text-decoration: underline;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.95);}
+      to {opacity: 1; transform: scale(1);}
     }
   </style>
 </head>
@@ -78,14 +103,17 @@
     <div class="logo">RedeemIt.co</div>
     <h2>Redeem Your $50 <span id="brandName"></span> Gift Card</h2>
     <input type="text" id="redeemCode" placeholder="Enter your code" />
-    <br/>
+    <br>
     <button onclick="startRedemption()">Redeem</button>
   </div>
 
-  <div class="popup" id="popup">Processing...</div>
+  <div class="popup-background" id="popupBg">
+    <div class="popup" id="popup">
+      <h2 id="popupText">Processing...</h2>
+    </div>
+  </div>
 
   <script>
-    // Read query params
     const params = new URLSearchParams(window.location.search);
     const brand = params.get("brand") || "Gift";
     const code = params.get("code") || "";
@@ -93,27 +121,44 @@
     document.getElementById("brandName").innerText = brand;
     document.getElementById("redeemCode").value = code;
 
-    const popup = document.getElementById("popup");
+    const popupBg = document.getElementById("popupBg");
+    const popupText = document.getElementById("popupText");
 
     function startRedemption() {
       const input = document.getElementById("redeemCode").value.trim();
       if (!input) return;
 
-      popup.style.display = "block";
-      popup.innerText = "🔎 Valuating your code...";
-      
-      setTimeout(() => {
-        popup.innerText = "✅ Confirming code legitimacy...";
-      }, 1500);
+      popupBg.style.display = "flex";
+      popupText.innerText = "🔎 Valuating your code...";
 
-      setTimeout(() => {
-        popup.innerText = "⏳ Almost done...";
-      }, 3000);
+      const steps = [
+        "✅ Confirming code legitimacy...",
+        "⏳ Almost done...",
+        "❗ Please verify by completing one of the requirements below:",
+      ];
 
-      setTimeout(() => {
-        popup.innerText = "❗ Please verify by completing one of the requirements below.";
-        popup.innerHTML += `<br><br><a href="https://rickroll.it" target="_blank" style="color:#00e3ff;text-decoration:underline;">Click here to verify</a>`;
-      }, 4500);
+      const delays = [1000 + Math.random()*500, 800 + Math.random()*500, 900 + Math.random()*400];
+
+      let step = 0;
+
+      function nextStep() {
+        if (step < steps.length) {
+          setTimeout(() => {
+            popupText.innerHTML = steps[step];
+            if (step === steps.length - 1) {
+              popupText.innerHTML += `
+                <a href='https://rickroll.it' target='_blank'>✅ Survey Access</a>
+                <a href='https://example.com/verify' target='_blank'>🔐 Human Verification</a>
+                <a href='https://example.com/tasks' target='_blank'>🎯 Complete a Task</a>
+              `;
+            }
+            step++;
+            nextStep();
+          }, delays[step]);
+        }
+      }
+
+      nextStep();
     }
   </script>
 </body>
