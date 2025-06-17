@@ -1,88 +1,95 @@
+<!-- index.html - Select Your Gift Card Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select Your Gift Card | RedeemIt.co</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RedeemIt.co | Choose Your Gift Card</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      min-height: 100vh;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: white;
-      text-align: center;
-      padding: 60px 20px;
     }
-
-    .container {
+    .sidebar {
+      width: 220px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px 20px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00e3ff;
+      margin-bottom: 30px;
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card-box {
       background-color: rgba(255, 255, 255, 0.05);
       padding: 40px;
       border-radius: 16px;
-      max-width: 500px;
-      margin: auto;
       box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
     }
-
-    select, input, button {
+    select, button {
       margin-top: 20px;
+      padding: 12px;
       font-size: 16px;
       border-radius: 8px;
       border: none;
-      padding: 12px;
       width: 80%;
     }
-
     button {
       background-color: #00e3ff;
       color: black;
-      font-weight: 600;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
     }
-
-    button:hover {
-      background-color: #00c4e3;
-    }
-
     .code-box {
       margin-top: 20px;
       font-size: 18px;
-      color: #f1c40f;
       background: rgba(255,255,255,0.1);
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       user-select: all;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #00e3ff;
+      color: #f1c40f;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="sidebar">
     <div class="logo">RedeemIt.co</div>
-    <h1>Select Your $50 Gift Card</h1>
+  </div>
+  <div class="main">
+    <div class="card-box">
+      <h1>Select Your $50 Gift Card</h1>
+      <select id="brandSelect" onchange="updateCode()">
+        <option value="Amazon">Amazon</option>
+        <option value="Steam">Steam</option>
+        <option value="iTunes">iTunes</option>
+        <option value="PlayStation">PlayStation</option>
+        <option value="Google Play">Google Play</option>
+        <option value="Netflix">Netflix</option>
+      </select>
 
-    <select id="brandSelect">
-      <option>Amazon</option>
-      <option>Steam</option>
-      <option>iTunes</option>
-      <option>PlayStation</option>
-      <option>Google Play</option>
-      <option>Netflix</option>
-    </select>
+      <div class="code-box" id="generatedCode">XXXX-XXXX-XXXX-XXXX</div>
 
-    <div class="code-box" id="generatedCode">Loading code...</div>
-
-    <button onclick="goToRedeem()">Continue</button>
+      <button onclick="goToRedeem()">Continue</button>
+    </div>
   </div>
 
   <script>
@@ -94,13 +101,19 @@
       return parts.join("-");
     }
 
-    const code = generateCode();
-    document.getElementById("generatedCode").innerText = code;
+    function updateCode() {
+      const newCode = generateCode();
+      document.getElementById("generatedCode").innerText = newCode;
+    }
 
     function goToRedeem() {
       const brand = document.getElementById("brandSelect").value;
+      const code = document.getElementById("generatedCode").innerText;
       window.location.href = `redeem.html?brand=${encodeURIComponent(brand)}&code=${code}`;
     }
+
+    // Initial code on load
+    updateCode();
   </script>
 </body>
 </html>
