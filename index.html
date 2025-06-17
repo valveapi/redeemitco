@@ -3,68 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redeem $50 Gift Card</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+  <title>RedeemIt.co — Claim Your $50 Gift Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #2c3e50, #3498db);
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
-      text-align: center;
-      padding: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
+
     .container {
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 30px;
-      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      text-align: center;
+      width: 100%;
       max-width: 400px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #00e3ff;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 25px;
+    }
+
     input[type="text"] {
-      padding: 10px;
-      width: 80%;
+      padding: 12px;
+      width: 90%;
       border: none;
       border-radius: 8px;
-      margin: 15px 0;
+      margin-bottom: 20px;
       font-size: 16px;
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #27ae60;
-      border: none;
-      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
       color: white;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      background: rgba(255,255,255,0.15);
+    }
+
+    button {
+      background-color: #00e3ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #2ecc71;
+      background-color: #00c4e3;
     }
-    .troll-message {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #f1c40f;
+
+    .message {
+      margin-top: 25px;
+      font-size: 17px;
       display: none;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 10px;
+      color: #f1c40f;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #666;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Redeem Your $50 Gift Card</h1>
-    <p>Enter your code below to redeem your gift card:</p>
-    <input type="text" id="codeInput" placeholder="Enter code here"/>
+    <div class="logo">RedeemIt.co</div>
+    <div class="subtitle">Secure Gift Card Redemption</div>
+
+    <p style="margin-bottom: 20px;">Enter your 16-digit code to redeem your $50 balance:</p>
+    <input type="text" id="codeInput" maxlength="19" placeholder="XXXX-XXXX-XXXX-XXXX" />
     <br />
-    <button onclick="redeemCode()">Redeem</button>
-    <div class="troll-message" id="message">🎉 You've been trolled! 🤣<br />There’s no $50 gift card, sorry buddy.</div>
+    <button onclick="redeemCode()">Redeem $50</button>
+
+    <div class="message" id="message">
+      ✅ Success!<br>
+      Just kidding — you’ve been trolled! 😂<br>
+      There’s no $50 card, only betrayal.
+    </div>
+
+    <div class="footer">
+      © 2025 RedeemIt.co Inc. All rights reserved.
+    </div>
   </div>
 
   <script>
     function redeemCode() {
-      const input = document.getElementById("codeInput").value;
-      if (input.trim().length > 0) {
-        document.getElementById("message").style.display = "block";
+      const code = document.getElementById("codeInput").value;
+      if (code.trim().length >= 8) {
+        const msg = document.getElementById("message");
+        msg.style.display = "block";
       }
     }
   </script>
