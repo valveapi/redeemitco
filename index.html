@@ -3,126 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RedeemIt.co — Claim Your $50 Gift Card</title>
+  <title>Select Your Gift Card | RedeemIt.co</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      text-align: center;
+      padding: 60px 20px;
     }
 
     .container {
       background-color: rgba(255, 255, 255, 0.05);
       padding: 40px;
       border-radius: 16px;
+      max-width: 500px;
+      margin: auto;
       box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      text-align: center;
-      width: 100%;
-      max-width: 400px;
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #00e3ff;
-    }
-
-    .subtitle {
-      font-size: 15px;
-      color: #aaa;
-      margin-bottom: 25px;
-    }
-
-    input[type="text"] {
-      padding: 12px;
-      width: 90%;
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 20px;
+    select, input, button {
+      margin-top: 20px;
       font-size: 16px;
-      background: rgba(255,255,255,0.1);
-      color: white;
-      outline: none;
-      transition: 0.3s ease;
-    }
-
-    input[type="text"]:focus {
-      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      border: none;
+      padding: 12px;
+      width: 80%;
     }
 
     button {
       background-color: #00e3ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 24px;
-      font-size: 16px;
+      color: black;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
     }
 
     button:hover {
       background-color: #00c4e3;
     }
 
-    .message {
-      margin-top: 25px;
-      font-size: 17px;
-      display: none;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      border-radius: 10px;
+    .code-box {
+      margin-top: 20px;
+      font-size: 18px;
       color: #f1c40f;
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 8px;
+      user-select: all;
     }
 
-    .footer {
-      margin-top: 40px;
-      font-size: 13px;
-      color: #666;
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00e3ff;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="logo">RedeemIt.co</div>
-    <div class="subtitle">Secure Gift Card Redemption</div>
+    <h1>Select Your $50 Gift Card</h1>
 
-    <p style="margin-bottom: 20px;">Enter your 16-digit code to redeem your $50 balance:</p>
-    <input type="text" id="codeInput" maxlength="19" placeholder="XXXX-XXXX-XXXX-XXXX" />
-    <br />
-    <button onclick="redeemCode()">Redeem $50</button>
+    <select id="brandSelect">
+      <option>Amazon</option>
+      <option>Steam</option>
+      <option>iTunes</option>
+      <option>PlayStation</option>
+      <option>Google Play</option>
+      <option>Netflix</option>
+    </select>
 
-    <div class="message" id="message">
-      ✅ Success!<br>
-      Just kidding — you’ve been trolled! 😂<br>
-      There’s no $50 card, only betrayal.
-    </div>
+    <div class="code-box" id="generatedCode">Loading code...</div>
 
-    <div class="footer">
-      © 2025 RedeemIt.co Inc. All rights reserved.
-    </div>
+    <button onclick="goToRedeem()">Continue</button>
   </div>
 
   <script>
-    function redeemCode() {
-      const code = document.getElementById("codeInput").value;
-      if (code.trim().length >= 8) {
-        const msg = document.getElementById("message");
-        msg.style.display = "block";
+    function generateCode() {
+      const parts = [];
+      for (let i = 0; i < 4; i++) {
+        parts.push(Math.random().toString(36).substr(2, 4).toUpperCase());
       }
+      return parts.join("-");
+    }
+
+    const code = generateCode();
+    document.getElementById("generatedCode").innerText = code;
+
+    function goToRedeem() {
+      const brand = document.getElementById("brandSelect").value;
+      window.location.href = `redeem.html?brand=${encodeURIComponent(brand)}&code=${code}`;
     }
   </script>
 </body>
