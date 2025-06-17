@@ -10,9 +10,18 @@ function generateCode() {
 function selectCard(name) {
   const code = generateCode();
   document.getElementById('codeBox').textContent = name + ' Code: ' + code;
+  document.getElementById('continueButton').disabled = false;
   localStorage.setItem('giftCode', code);
+  localStorage.setItem('selectedBrand', name);
 }
 
 function goToRedeem() {
   window.location.href = 'redeem.html';
 }
+
+window.onload = function () {
+  if (window.location.pathname.includes('redeem.html')) {
+    const code = localStorage.getItem('giftCode') || 'XXXX-XXXX-XXXX-XXXX';
+    document.getElementById('codeInput').value = code;
+  }
+};
