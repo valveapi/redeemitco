@@ -3,60 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedeemItCo - Claim Your $50 Gift Card!</title>
+    <title>RedeemItCo - Gift Card Redemption</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
             padding: 0;
             color: #333;
         }
         .header {
-            background-color: #ff6600;
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
             color: white;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
         .container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 30px auto;
             padding: 20px;
             background: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .giftcard {
-            text-align: center;
+        .card-selector {
             margin: 20px 0;
         }
-        .giftcard img {
-            max-width: 300px;
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
-        .steps {
-            margin: 30px 0;
-        }
-        .step {
-            margin-bottom: 15px;
-            padding: 10px;
+        .card-display {
             background: #f9f9f9;
-            border-left: 4px solid #ff6600;
-        }
-        .survey-link {
-            display: block;
-            background: #ff6600;
-            color: white;
+            border: 1px dashed #ccc;
+            padding: 20px;
             text-align: center;
-            padding: 15px;
+            border-radius: 8px;
             margin: 20px 0;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.3s;
         }
-        .survey-link:hover {
-            background: #e55c00;
+        .code {
+            font-family: monospace;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: #6e48aa;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        button {
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .disclaimer {
             font-size: 12px;
@@ -64,76 +86,159 @@
             margin-top: 30px;
             text-align: center;
         }
-        .loading-bar {
-            height: 20px;
-            background: #eee;
-            border-radius: 10px;
+        .loading {
+            display: none;
+            text-align: center;
             margin: 20px 0;
-            overflow: hidden;
         }
-        .progress {
-            height: 100%;
-            width: 0%;
-            background: #ff6600;
-            animation: load 3s infinite;
+        .loading-dots {
+            display: inline-block;
         }
-        @keyframes load {
-            0% { width: 0%; }
-            50% { width: 100%; }
-            100% { width: 0%; }
+        .loading-dots:after {
+            content: ' .';
+            animation: dots 1s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: #6e48aa; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 #6e48aa, .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 #6e48aa, .5em 0 0 #6e48aa; }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>RedeemItCo</h1>
-        <p>Your $50 Gift Card Awaits!</p>
+        <div class="logo">RedeemItCo</div>
+        <div class="tagline">Your Trusted Gift Card Redemption Service</div>
     </div>
 
     <div class="container">
-        <div class="giftcard">
-            <img src="https://i.imgur.com/JQ9wG3x.png" alt="$50 Gift Card">
-            <h2>Congratulations!</h2>
-            <p>You've been selected to claim a <strong>$50 Gift Card</strong> to your favorite store!</p>
+        <h2>Select a Gift Card to Redeem</h2>
+        
+        <div class="card-selector">
+            <select id="cardType">
+                <option value="">-- Select a Gift Card --</option>
+                <option value="roblox">Roblox</option>
+                <option value="amazon">Amazon</option>
+                <option value="google">Google Play</option>
+                <option value="apple">Apple App Store</option>
+                <option value="steam">Steam</option>
+                <option value="xbox">Xbox</option>
+                <option value="playstation">PlayStation</option>
+            </select>
         </div>
 
-        <div class="loading-bar">
-            <div class="progress"></div>
+        <div class="card-display">
+            <h3 id="cardName">Gift Card</h3>
+            <div class="code" id="cardCode">XXXX-XXXX-XXXX</div>
+            <p>Value: $<span id="cardValue">50</span></p>
         </div>
 
-        <div class="steps">
-            <h3>Complete these quick steps to claim your prize:</h3>
-            <div class="step">
-                <strong>Step 1:</strong> Click the "Start Now" button below
-            </div>
-            <div class="step">
-                <strong>Step 2:</strong> Complete our short partner survey (takes 2-5 minutes)
-            </div>
-            <div class="step">
-                <strong>Step 3:</strong> Verify your account information
-            </div>
-            <div class="step">
-                <strong>Step 4:</strong> Receive your $50 Gift Card via email!
-            </div>
+        <button id="redeemBtn">REDEEM NOW</button>
+        <div class="loading" id="loading">
+            <p>Generating your unique code<span class="loading-dots"></span></p>
         </div>
-
-        <a href="survey.html" class="survey-link">START NOW - LIMITED TIME OFFER!</a>
 
         <div class="disclaimer">
-            * This is not a real offer. This is a joke website to troll a friend. No actual gift cards are being distributed. 
-            <br>RedeemItCo is not a real company. Please don't enter any real personal information.
+            * This is a simulated gift card redemption experience for entertainment purposes only.
+            <br>No actual gift cards or monetary value is being distributed.
         </div>
     </div>
 
     <script>
-        // Fake visitor counter
-        document.addEventListener('DOMContentLoaded', function() {
-            const visitors = Math.floor(Math.random() * 500) + 1500;
-            const counter = document.createElement('p');
-            counter.style.textAlign = 'center';
-            counter.style.color = '#666';
-            counter.innerHTML = `<strong>${visitors}</strong> people are viewing this offer right now!`;
-            document.querySelector('.container').appendChild(counter);
+        // Available gift cards
+        const giftCards = {
+            roblox: {
+                name: "Roblox Gift Card",
+                value: 50,
+                prefix: "RBX"
+            },
+            amazon: {
+                name: "Amazon Gift Card",
+                value: 50,
+                prefix: "AMZ"
+            },
+            google: {
+                name: "Google Play Gift Card",
+                value: 25,
+                prefix: "GGL"
+            },
+            apple: {
+                name: "Apple App Store Gift Card",
+                value: 25,
+                prefix: "APL"
+            },
+            steam: {
+                name: "Steam Wallet Code",
+                value: 20,
+                prefix: "STM"
+            },
+            xbox: {
+                name: "Xbox Gift Card",
+                value: 25,
+                prefix: "XBX"
+            },
+            playstation: {
+                name: "PlayStation Store Card",
+                value: 20,
+                prefix: "PSN"
+            }
+        };
+
+        // Generate a random gift card code
+        function generateCode(prefix) {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let code = prefix;
+            
+            for (let i = 0; i < 12; i++) {
+                if (i > 0 && i % 4 === 0) code += "-";
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            return code;
+        }
+
+        // Update displayed card when selection changes
+        document.getElementById('cardType').addEventListener('change', function() {
+            const selected = this.value;
+            
+            if (selected) {
+                const card = giftCards[selected];
+                document.getElementById('cardName').textContent = card.name;
+                document.getElementById('cardValue').textContent = card.value;
+                
+                // Show loading animation
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('redeemBtn').style.display = 'none';
+                
+                // Simulate code generation delay
+                setTimeout(() => {
+                    document.getElementById('cardCode').textContent = generateCode(card.prefix);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('redeemBtn').style.display = 'block';
+                }, 1500);
+            } else {
+                document.getElementById('cardName').textContent = "Gift Card";
+                document.getElementById('cardCode').textContent = "XXXX-XXXX-XXXX";
+                document.getElementById('cardValue').textContent = "50";
+            }
+        });
+
+        // Initial code generation
+        document.getElementById('cardCode').textContent = generateCode("TMP");
+
+        // Handle redeem button click
+        document.getElementById('redeemBtn').addEventListener('click', function() {
+            const selected = document.getElementById('cardType').value;
+            
+            if (!selected) {
+                alert("Please select a gift card type first!");
+                return;
+            }
+            
+            // Redirect to redemption page with card type and code as parameters
+            const code = document.getElementById('cardCode').textContent;
+            window.location.href = `redeem.html?type=${selected}&code=${encodeURIComponent(code)}`;
         });
     </script>
 </body>
