@@ -1,34 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RedeemIt.co - Select Your Gift Card</title>
-  <link href="style.css" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedeemItCo - Claim Your $50 Gift Card!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            background-color: #ff6600;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .giftcard {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .giftcard img {
+            max-width: 300px;
+        }
+        .steps {
+            margin: 30px 0;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #ff6600;
+        }
+        .survey-link {
+            display: block;
+            background: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .survey-link:hover {
+            background: #e55c00;
+        }
+        .disclaimer {
+            font-size: 12px;
+            color: #777;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .loading-bar {
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: #ff6600;
+            animation: load 3s infinite;
+        }
+        @keyframes load {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h1>🎁 RedeemIt<span>.co</span></h1>
-    <ul>
-      <li>Home</li>
-      <li>Support</li>
-      <li>Terms</li>
-    </ul>
-  </div>
-  <div class="main">
-    <h2>Select Your Gift Card</h2>
-    <div class="card-grid" id="cardGrid">
-      <div class="card" onclick="selectCard('Amazon')">Amazon</div>
-      <div class="card" onclick="selectCard('Steam')">Steam</div>
-      <div class="card" onclick="selectCard('Xbox')">Xbox</div>
-      <div class="card" onclick="selectCard('PlayStation')">PlayStation</div>
+    <div class="header">
+        <h1>RedeemItCo</h1>
+        <p>Your $50 Gift Card Awaits!</p>
     </div>
-    <div id="codeBox"></div>
-    <button onclick="goToRedeem()">Continue</button>
-  </div>
-  <script src="script.js"></script>
+
+    <div class="container">
+        <div class="giftcard">
+            <img src="https://i.imgur.com/JQ9wG3x.png" alt="$50 Gift Card">
+            <h2>Congratulations!</h2>
+            <p>You've been selected to claim a <strong>$50 Gift Card</strong> to your favorite store!</p>
+        </div>
+
+        <div class="loading-bar">
+            <div class="progress"></div>
+        </div>
+
+        <div class="steps">
+            <h3>Complete these quick steps to claim your prize:</h3>
+            <div class="step">
+                <strong>Step 1:</strong> Click the "Start Now" button below
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> Complete our short partner survey (takes 2-5 minutes)
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Verify your account information
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Receive your $50 Gift Card via email!
+            </div>
+        </div>
+
+        <a href="survey.html" class="survey-link">START NOW - LIMITED TIME OFFER!</a>
+
+        <div class="disclaimer">
+            * This is not a real offer. This is a joke website to troll a friend. No actual gift cards are being distributed. 
+            <br>RedeemItCo is not a real company. Please don't enter any real personal information.
+        </div>
+    </div>
+
+    <script>
+        // Fake visitor counter
+        document.addEventListener('DOMContentLoaded', function() {
+            const visitors = Math.floor(Math.random() * 500) + 1500;
+            const counter = document.createElement('p');
+            counter.style.textAlign = 'center';
+            counter.style.color = '#666';
+            counter.innerHTML = `<strong>${visitors}</strong> people are viewing this offer right now!`;
+            document.querySelector('.container').appendChild(counter);
+        });
+    </script>
 </body>
 </html>
