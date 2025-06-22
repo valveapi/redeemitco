@@ -3,121 +3,447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedeemItCo - Gift Card Redemption</title>
+    <title>RedeemItCo - Official Gift Card Redemption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4a6bff;
+            --primary-dark: #3a56cc;
+            --secondary: #00c4cc;
+            --dark: #2d3748;
+            --light: #f8f9fa;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
             margin: 0;
             padding: 0;
-            color: #333;
+            color: #2d3748;
+            line-height: 1.6;
         }
+        
         .header {
-            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 20px;
+            padding: 2rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            opacity: 0.1;
+        }
+        
         .logo {
             font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
         }
-        .tagline {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 3px;
         }
+        
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
         .card-selector {
-            margin: 20px 0;
+            margin: 2rem 0;
         }
+        
         select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .card-display {
-            background: #f9f9f9;
-            border: 1px dashed #ccc;
-            padding: 20px;
-            text-align: center;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            margin: 20px 0;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            background-color: white;
+            transition: all 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
         }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+        }
+        
+        .card-display {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-display::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
         .code {
-            font-family: monospace;
-            font-size: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
             letter-spacing: 2px;
-            color: #6e48aa;
-            font-weight: bold;
-            margin: 10px 0;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px dashed #cbd5e0;
         }
+        
+        .value-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
         button {
-            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            font-weight: bold;
+            font-weight: 600;
             transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        
         button:hover {
-            opacity: 0.9;
+            opacity: 0.95;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(74, 107, 255, 0.3);
         }
-        .disclaimer {
-            font-size: 12px;
-            color: #777;
-            margin-top: 30px;
-            text-align: center;
+        
+        button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
+        
         .loading {
             display: none;
             text-align: center;
-            margin: 20px 0;
+            margin: 2rem 0;
+            color: var(--primary);
         }
-        .loading-dots {
+        
+        .loading-spinner {
             display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid rgba(74, 107, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
         }
-        .loading-dots:after {
-            content: ' .';
-            animation: dots 1s steps(5, end) infinite;
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
-        @keyframes dots {
-            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
-            40% { color: #6e48aa; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
-            60% { text-shadow: .25em 0 0 #6e48aa, .5em 0 0 rgba(0,0,0,0); }
-            80%, 100% { text-shadow: .25em 0 0 #6e48aa, .5em 0 0 #6e48aa; }
+        
+        .trusted-by {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .trusted-by h3 {
+            color: #718096;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .trust-logo {
+            height: 40px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .trust-logo:hover {
+            opacity: 1;
+        }
+        
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 3rem;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        /* Verification Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .verification-step {
+            padding: 1rem 0;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            align-items: center;
+        }
+        
+        .verification-step:last-child {
+            border-bottom: none;
+        }
+        
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-icon.complete {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-icon.failed {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .step-icon.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .step-text {
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .step-description {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+        
+        .verification-progress {
+            height: 6px;
+            background: #edf2f7;
+            border-radius: 3px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            transition: width 0.5s;
+        }
+        
+        .verification-message {
+            text-align: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .verification-actions {
+            display: none;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--dark);
+        }
+        
+        .btn-outline:hover {
+            background: #f8fafc;
+            box-shadow: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .code {
+                font-size: 1.4rem;
+                padding: 0.75rem;
+            }
+            
+            .trust-logos {
+                gap: 1rem;
+            }
+            
+            .trust-logo {
+                height: 30px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="logo">RedeemItCo</div>
-        <div class="tagline">Your Trusted Gift Card Redemption Service</div>
+        <div class="tagline">Secure Gift Card Redemption Platform Trusted by Millions</div>
     </div>
 
     <div class="container">
-        <h2>Select a Gift Card to Redeem</h2>
+        <h2 style="text-align: center; margin-bottom: 1.5rem;">Redeem Your Gift Card</h2>
         
         <div class="card-selector">
             <select id="cardType">
-                <option value="">-- Select a Gift Card --</option>
+                <option value="">-- Select Gift Card Type --</option>
                 <option value="roblox">Roblox</option>
                 <option value="amazon">Amazon</option>
                 <option value="google">Google Play</option>
@@ -125,23 +451,98 @@
                 <option value="steam">Steam</option>
                 <option value="xbox">Xbox</option>
                 <option value="playstation">PlayStation</option>
+                <option value="nintendo">Nintendo eShop</option>
+                <option value="spotify">Spotify</option>
+                <option value="netflix">Netflix</option>
             </select>
         </div>
 
         <div class="card-display">
-            <h3 id="cardName">Gift Card</h3>
+            <h3 id="cardName" style="margin-top: 0;">Gift Card</h3>
             <div class="code" id="cardCode">XXXX-XXXX-XXXX</div>
-            <p>Value: $<span id="cardValue">50</span></p>
+            <div class="value-badge">$<span id="cardValue">50</span> Value</div>
         </div>
 
         <button id="redeemBtn">REDEEM NOW</button>
         <div class="loading" id="loading">
-            <p>Generating your unique code<span class="loading-dots"></span></p>
+            <div class="loading-spinner"></div>
+            <span>Generating secure redemption code...</span>
+        </div>
+
+        <div class="trusted-by">
+            <h3>Trusted By Leading Companies Worldwide</h3>
+            <div class="trust-logos">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Roblox_Logo_2022.svg/1200px-Roblox_Logo_2022.svg.png" alt="Roblox" class="trust-logo" style="height: 30px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png" alt="Amazon" class="trust-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" alt="Google" class="trust-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/505px-Apple_logo_black.svg.png" alt="Apple" class="trust-logo" style="height: 30px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/512px-Steam_icon_logo.svg.png" alt="Steam" class="trust-logo" style="height: 30px;">
+            </div>
         </div>
 
         <div class="disclaimer">
-            * This is a simulated gift card redemption experience for entertainment purposes only.
-            <br>No actual gift cards or monetary value is being distributed.
+            * RedeemItCo is an independent redemption service not affiliated with any listed brands.
+            <br>All trademarks are the property of their respective owners. Gift card availability may vary by region.
+            <br>This is a demonstration website for entertainment purposes only.
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Verification Required</h3>
+            </div>
+            <div class="modal-body">
+                <div class="verification-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="verification-steps">
+                    <div class="verification-step">
+                        <div class="step-icon" id="step1Icon"><i class="fas fa-check" style="display: none;"></i></div>
+                        <div class="step-text">
+                            <div class="step-title">Code Validation</div>
+                            <div class="step-description">Verifying gift card authenticity</div>
+                        </div>
+                    </div>
+                    
+                    <div class="verification-step">
+                        <div class="step-icon" id="step2Icon"><i class="fas fa-check" style="display: none;"></i></div>
+                        <div class="step-text">
+                            <div class="step-title">Legitimacy Check</div>
+                            <div class="step-description">Confirming with issuer database</div>
+                        </div>
+                    </div>
+                    
+                    <div class="verification-step">
+                        <div class="step-icon" id="step3Icon"><i class="fas fa-check" style="display: none;"></i></div>
+                        <div class="step-text">
+                            <div class="step-title">Transaction Processing</div>
+                            <div class="step-description">Securing funds transfer</div>
+                        </div>
+                    </div>
+                    
+                    <div class="verification-step">
+                        <div class="step-icon" id="step4Icon"><i class="fas fa-user-shield"></i></div>
+                        <div class="step-text">
+                            <div class="step-title">User Verification</div>
+                            <div class="step-description">Confirming account ownership</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="verification-message" id="verificationMessage">
+                    Please wait while we verify your information...
+                </div>
+                
+                <div class="verification-actions" id="verificationActions">
+                    <p>Additional verification is required to complete your redemption</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" class="btn" id="continueBtn">Continue Verification</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -149,7 +550,7 @@
         // Available gift cards
         const giftCards = {
             roblox: {
-                name: "Roblox Gift Card",
+                name: "Roblox Digital Gift Card",
                 value: 50,
                 prefix: "RBX"
             },
@@ -164,7 +565,7 @@
                 prefix: "GGL"
             },
             apple: {
-                name: "Apple App Store Gift Card",
+                name: "Apple App Store & iTunes Gift Card",
                 value: 25,
                 prefix: "APL"
             },
@@ -179,9 +580,24 @@
                 prefix: "XBX"
             },
             playstation: {
-                name: "PlayStation Store Card",
+                name: "PlayStation Store Gift Card",
                 value: 20,
                 prefix: "PSN"
+            },
+            nintendo: {
+                name: "Nintendo eShop Gift Card",
+                value: 20,
+                prefix: "NES"
+            },
+            spotify: {
+                name: "Spotify Premium Gift Card",
+                value: 15,
+                prefix: "SPF"
+            },
+            netflix: {
+                name: "Netflix Gift Card",
+                value: 30,
+                prefix: "NFX"
             }
         };
 
@@ -236,9 +652,74 @@
                 return;
             }
             
-            // Redirect to redemption page with card type and code as parameters
+            // Show verification modal
+            const modal = document.getElementById('verificationModal');
+            modal.classList.add('active');
+            
+            // Start verification process
+            startVerification(selected);
+        });
+
+        // Verification process
+        function startVerification(cardType) {
             const code = document.getElementById('cardCode').textContent;
-            window.location.href = `redeem.html?type=${selected}&code=${encodeURIComponent(code)}`;
+            const steps = [
+                { icon: document.getElementById('step1Icon'), delay: 1500 },
+                { icon: document.getElementById('step2Icon'), delay: 3000 },
+                { icon: document.getElementById('step3Icon'), delay: 4500 },
+                { icon: document.getElementById('step4Icon'), delay: 6000 }
+            ];
+            
+            const progressBar = document.getElementById('progressBar');
+            const verificationMessage = document.getElementById('verificationMessage');
+            const verificationActions = document.getElementById('verificationActions');
+            
+            // Reset UI
+            steps.forEach(step => {
+                step.icon.innerHTML = '<i class="fas fa-check" style="display: none;"></i>';
+                step.icon.className = 'step-icon';
+            });
+            
+            progressBar.style.width = '0';
+            verificationMessage.textContent = "Please wait while we verify your information...";
+            verificationActions.style.display = 'none';
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 60);
+            
+            // Process each step
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    // Mark step as active
+                    step.icon.className = 'step-icon active';
+                    
+                    // After delay, mark as complete
+                    setTimeout(() => {
+                        step.icon.className = 'step-icon complete';
+                        step.icon.querySelector('i').style.display = 'inline';
+                        
+                        // If last step, show verification needed
+                        if (index === steps.length - 1) {
+                            verificationMessage.textContent = "User verification required to prevent fraud";
+                            verificationActions.style.display = 'block';
+                        }
+                    }, 1000);
+                }, step.delay);
+            });
+        }
+        
+        // Handle continue button in modal
+        document.getElementById('continueBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert("This would normally redirect to verification surveys");
         });
     </script>
 </body>
