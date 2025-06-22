@@ -5,173 +5,396 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redeem Your Gift Card - RedeemItCo</title>
     <style>
+        :root {
+            --primary: #2a52be;
+            --primary-dark: #1a3a8f;
+            --secondary: #ff6b00;
+            --success: #4CAF50;
+            --error: #f44336;
+            --gray: #f5f5f5;
+            --dark-gray: #e0e0e0;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
             color: #333;
+            line-height: 1.6;
         }
+        
         .header {
-            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 20px;
+            padding: 25px 0;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .card-info {
-            background: #f9f9f9;
-            border: 1px dashed #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .code {
-            font-family: monospace;
-            font-size: 20px;
-            letter-spacing: 2px;
-            color: #6e48aa;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button {
-            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .verification-steps {
-            display: none;
-            margin-top: 30px;
-        }
-        .step {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: #f0f0f0;
-            border-radius: 4px;
             position: relative;
         }
-        .step.complete {
-            background: #e8f5e9;
-            color: #2e7d32;
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
         }
-        .step.failed {
-            background: #ffebee;
-            color: #c62828;
+        
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 300;
         }
-        .step.active {
-            background: #e3f2fd;
-            font-weight: bold;
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
-        .survey-options {
-            display: none;
-            margin-top: 20px;
+        
+        .card-info {
+            background: var(--gray);
+            border: 1px solid var(--dark-gray);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
             text-align: center;
         }
-        .survey-btn {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 24px;
-            background: #ff9800;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
+        
+        .card-name {
+            font-size: 1.5rem;
+            margin: 0 0 10px;
+            color: var(--primary);
+        }
+        
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            letter-spacing: 3px;
+            color: var(--primary-dark);
             font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border: 1px dashed var(--primary);
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .card-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(42, 82, 190, 0.2);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .trusted-by {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 20px 0;
+        }
+        
+        .trust-logo {
+            height: 40px;
+            opacity: 0.7;
+            filter: grayscale(100%);
             transition: all 0.3s;
         }
-        .survey-btn:hover {
-            background: #f57c00;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        
+        .trust-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
         }
-        .disclaimer {
-            font-size: 12px;
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            animation: slideUp 0.4s;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
             color: #777;
+            padding: 5px;
+        }
+        
+        .verification-step {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: var(--gray);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ddd;
+            color: #555;
+        }
+        
+        .step-text {
+            flex: 1;
+        }
+        
+        .step-success .step-icon {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-error .step-icon {
+            background: var(--error);
+            color: white;
+        }
+        
+        .step-active {
+            background: rgba(42, 82, 190, 0.1);
+            font-weight: 600;
+        }
+        
+        .step-active .step-icon {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: var(--dark-gray);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s;
+        }
+        
+        .verification-message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #999;
             margin-top: 30px;
             text-align: center;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="logo">RedeemItCo</div>
-        <div>Complete Your Redemption</div>
+        <div class="tagline">Secure Gift Card Redemption</div>
     </div>
 
     <div class="container">
         <h2>Redeem Your Gift Card</h2>
         
         <div class="card-info">
-            <h3 id="cardName">Gift Card</h3>
+            <h3 class="card-name" id="cardName">Gift Card</h3>
             <div class="code" id="cardCode">XXXX-XXXX-XXXX</div>
-            <p>Value: $<span id="cardValue">50</span></p>
+            <p class="card-value">Value: $<span id="cardValue">50</span></p>
         </div>
 
         <div class="form-group">
-            <label for="username">Enter Your Username/Email</label>
-            <input type="text" id="username" placeholder="Your game/account username or email">
+            <label for="username">Enter Your Account Username</label>
+            <input type="text" id="username" placeholder="Your game/account username">
         </div>
 
-        <button id="submitBtn">REDEEM GIFT CARD</button>
+        <button id="redeemBtn" class="btn">REDEEM GIFT CARD</button>
 
-        <div class="verification-steps" id="verificationSteps">
-            <div class="step" id="step1">Validating Code...</div>
-            <div class="step" id="step2">Checking Legitimacy...</div>
-            <div class="step" id="step3">Confirming Transaction...</div>
-            <div class="step" id="step4">User Verification Needed</div>
-        </div>
-
-        <div class="survey-options" id="surveyOptions">
-            <h3>Complete Verification</h3>
-            <p>Please complete one quick survey to verify your identity:</p>
-            <a href="#" class="survey-btn" id="survey1">Survey Option 1</a>
-            <a href="#" class="survey-btn" id="survey2">Survey Option 2</a>
-            <a href="#" class="survey-btn" id="survey3">Survey Option 3</a>
+        <div class="trusted-by">TRUSTED BY LEADING COMPANIES WORLDWIDE</div>
+        <div class="trust-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Roblox-logo-1.png/800px-Roblox-logo-1.png" class="trust-logo" alt="Roblox" height="40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/800px-Amazon_logo.svg.png" class="trust-logo" alt="Amazon" height="40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/800px-Google_2015_logo.svg.png" class="trust-logo" alt="Google" height="40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/505px-Apple_logo_black.svg.png" class="trust-logo" alt="Apple" height="40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/800px-Steam_icon_logo.svg.png" class="trust-logo" alt="Steam" height="40">
         </div>
 
         <div class="disclaimer">
-            * This is a simulated gift card redemption experience for entertainment purposes only.
-            <br>No actual gift cards or monetary value is being distributed.
+            * This redemption service is provided by RedeemItCo, an independent gift card processing partner.
+            <br>All trademarks are the property of their respective owners. Gift cards are subject to terms and conditions.
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Verification Required</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="verificationProgress"></div>
+                </div>
+            </div>
+            
+            <div class="verification-steps">
+                <div class="verification-step" id="step1">
+                    <div class="step-icon">1</div>
+                    <div class="step-text">Validating Gift Card Code</div>
+                </div>
+                <div class="verification-step" id="step2">
+                    <div class="step-icon">2</div>
+                    <div class="step-text">Checking Card Legitimacy</div>
+                </div>
+                <div class="verification-step" id="step3">
+                    <div class="step-icon">3</div>
+                    <div class="step-text">Confirming Transaction</div>
+                </div>
+                <div class="verification-step" id="step4">
+                    <div class="step-icon">4</div>
+                    <div class="step-text">User Verification Needed</div>
+                </div>
+            </div>
+            
+            <div class="verification-message" id="verificationMessage">
+                Please wait while we verify your gift card...
+            </div>
+            
+            <div class="btn-container" id="finalStep" style="display: none;">
+                <button class="btn" id="continueBtn">CONTINUE VERIFICATION</button>
+                <button class="btn btn-secondary" id="cancelBtn">CANCEL</button>
+            </div>
         </div>
     </div>
 
@@ -183,10 +406,10 @@
 
         // Card type names
         const cardNames = {
-            roblox: "Roblox Gift Card",
-            amazon: "Amazon Gift Card",
+            roblox: "Roblox Digital Gift Card",
+            amazon: "Amazon eGift Card",
             google: "Google Play Gift Card",
-            apple: "Apple App Store Gift Card",
+            apple: "Apple App Store & iTunes Card",
             steam: "Steam Wallet Code",
             xbox: "Xbox Gift Card",
             playstation: "PlayStation Store Card"
@@ -205,7 +428,7 @@
 
         // Set card info from URL parameters
         if (cardType && cardCode) {
-            document.getElementById('cardName').textContent = cardNames[cardType] || "Gift Card";
+            document.getElementById('cardName').textContent = cardNames[cardType] || "Digital Gift Card";
             document.getElementById('cardCode').textContent = cardCode;
             document.getElementById('cardValue').textContent = cardValues[cardType] || "50";
         } else {
@@ -213,23 +436,47 @@
             window.location.href = 'index.html';
         }
 
-        // Handle redeem button click
-        document.getElementById('submitBtn').addEventListener('click', function() {
+        // Modal functionality
+        const modal = document.getElementById('verificationModal');
+        const closeModal = document.querySelector('.close-modal');
+        const redeemBtn = document.getElementById('redeemBtn');
+        const continueBtn = document.getElementById('continueBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const progressBar = document.getElementById('verificationProgress');
+        const verificationMessage = document.getElementById('verificationMessage');
+        
+        // Open modal when redeem button is clicked
+        redeemBtn.addEventListener('click', function() {
             const username = document.getElementById('username').value.trim();
             
             if (!username) {
-                alert("Please enter your username or email!");
+                alert("Please enter your username to continue!");
                 return;
             }
             
-            // Show verification steps
-            document.getElementById('verificationSteps').style.display = 'block';
-            this.style.display = 'none';
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
             
-            // Simulate verification process
+            // Start verification process
             simulateVerification();
         });
-
+        
+        // Close modal
+        closeModal.addEventListener('click', closeModalFunc);
+        cancelBtn.addEventListener('click', closeModalFunc);
+        
+        function closeModalFunc() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Continue button (would link to surveys later)
+        continueBtn.addEventListener('click', function() {
+            alert("This would redirect to survey pages in the real implementation");
+            closeModalFunc();
+        });
+        
+        // Simulate verification process
         function simulateVerification() {
             const steps = [
                 document.getElementById('step1'),
@@ -238,29 +485,50 @@
                 document.getElementById('step4')
             ];
             
+            // Reset all steps
+            steps.forEach(step => {
+                step.className = 'verification-step';
+                step.querySelector('.step-icon').textContent = step.id.replace('step', '');
+            });
+            
+            // Initial progress
+            progressBar.style.width = '0%';
+            verificationMessage.textContent = "Initializing verification process...";
+            
             // Process each step with delay
             steps.forEach((step, index) => {
                 setTimeout(() => {
+                    // Update progress bar
+                    progressBar.style.width = `${(index + 1) * 25}%`;
+                    
                     // Mark previous steps as complete
                     if (index > 0) {
-                        steps[index-1].classList.remove('active');
-                        steps[index-1].classList.add('complete');
+                        steps[index-1].classList.add('step-success');
+                        steps[index-1].querySelector('.step-icon').textContent = '✓';
                     }
                     
                     // Set current step as active
-                    step.classList.add('active');
+                    step.classList.add('step-active');
                     
-                    // If last step, show survey options
+                    // Update message
+                    const messages = [
+                        "Validating gift card code with issuer...",
+                        "Checking card authenticity and balance...",
+                        "Processing transaction with payment network...",
+                        "Verifying user account details..."
+                    ];
+                    verificationMessage.textContent = messages[index];
+                    
+                    // If last step, show final options
                     if (index === steps.length - 1) {
                         setTimeout(() => {
-                            step.classList.remove('active');
-                            step.classList.add('complete');
-                            document.getElementById('surveyOptions').style.display = 'block';
-                            
-                            // Set survey links (you can replace these with actual URLs later)
-                            document.getElementById('survey1').href = "survey1.html";
-                            document.getElementById('survey2').href = "survey2.html";
-                            document.getElementById('survey3').href = "survey3.html";
+                            step.classList.add('step-success');
+                            step.querySelector('.step-icon').textContent = '✓';
+                            verificationMessage.innerHTML = `
+                                <strong>Additional verification required</strong><br>
+                                To prevent fraud, please complete one quick verification step.
+                            `;
+                            document.getElementById('finalStep').style.display = 'flex';
                         }, 1500);
                     }
                 }, index * 2000);
